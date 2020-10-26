@@ -8,10 +8,7 @@ You can start your notes here before you start diving into specific topics under
 
 The table of contents can link to each section so long as you match the names right (see comments in template.md for more elaboration on this!). This Markdown to HTML mapping doesn't like periods in the section titles and won't link them from the table of contents, so use dashes instead if you need to.
 
-- [First Big Topic](#first-big-topic)
-	- [Subtopic 1-1](#subtopic-1-1)
-	- [Subtopic 1-2](#subtopic-1-2)
-	- [Subtopic 1-3](#subtopic-1-3)
+- [Image Retargeting](#image-retargeting-overview)
 - [Seam Carving Algorithm](#seam-carving-algorithm)
 	- [Overview](#overview)
 	- [Implementation using Dynamic Programming](#implementation)
@@ -104,6 +101,28 @@ $$\begin{bmatrix}
 
 As with the labelled equations, it makes a difference whether the lines above and below the equation are blank, so keep that in mind while debugging! 
 
+<a name='image-retargeting-overview'></a>
+## Image Retargeting and Resizing Overview
+In today's world, we use devices of various shapes and sizes to consume information and display images and videos. When we go from a laptop to a mobile phone, we see that the image size is significantly smaller and its pixel information is changed. This topic introduces the techniques used for resizing images while accounting for important content and limiting artifacts that may be caused by rescaling.
+
+### Problem Statement
+Input an image of size n × m and return an image of new size n′ × m′ which will be a good representative of original image. 
+Upon retargeting, the expectations are:
+1. Output image adheres to device geometric constraints
+2. Output image preserves important content and structures
+3. Output image limits artifacts
+
+### Importance Measures
+1. A function, S : p → [0, 1], measures whether a pixel is important to an image.
+2. More sophisticated techniques to measure which parts of an image are important to human perception. These include attention models, eye tracking (gaze studies), and face detectors.
+### General Retargeting framework
+Step 1: Define an energy function *E(I)*x -> This could be perceived interest, importance or saliency
+Step 2: Use one or more operators to change the image *I*
+
+In this example. we have chosen to retarget using cropping
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/overview-targeting-example.png">
+</div>
 
 
 
