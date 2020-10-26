@@ -188,9 +188,9 @@ In mathematical notation, a vertical seam, a seam which can be used to reduce th
 
 $$s^x = \{s_i^x\}_{i=1}^m = \{(x(i), i)\}^m_{i=1}, s.t. \forall i, |x(i)-x(i-1)| \leq 1$$
 
-Here a vertical seam is represented as a set of $m$ pixels, $\{s_i^X\}_{i=1}^m$, where $m$ is the number of rows in the image. Note that since our image has $m$ rows and our vertical seam is connected from the top to the bottom of the image, then we need $m$ pixels in our vertical seam in total, exactly one pixel for each row of the image. 
+Here a vertical seam is represented as a set of $m$ pixels, $\{s_i^x\}_{i=1}^m$, where $m$ is the number of rows in the image. Note that since our image has $m$ rows and our vertical seam is connected from the top to the bottom of the image, then we need $m$ pixels in our vertical seam in total, exactly one pixel for each row of the image. 
 
-Further, each pixel $s_i^X$ in the seam can be written as its coordinate $(x(i), i)$. $x(i)$ represents the pixel's column, or x-coordinate, while $i$ represents the pixel's row, or y-coordinate. As we can see, the y-coordinate goes from $1$ to $m$ indicating that we have exactly one pixel for each row of the image. 
+Further, each pixel $s_i^x$ in the seam can be written as its coordinate $(x(i), i)$. $x(i)$ represents the pixel's column, or x-coordinate, while $i$ represents the pixel's row, or y-coordinate. As we can see, the y-coordinate goes from $1$ to $m$ indicating that we have exactly one pixel for each row of the image. 
 
 Note that we also have an additional constraint on the x-coordinates of the pixels in our seam, that is given by: $\forall i, \|x(i)-x(i-1)\| \leq 1$. This can be interpreted as for every $i$, or row, the x-coordinate of the pixel in the previous row $i - 1$ and the x-coordinate of the pixel in the current row $i$ must come from neighboring columns, such that the absolute difference in x-coordinate, or column, between these two pixels must be less than or equal to 1. This further ensures that our seam remains connected. 
 
