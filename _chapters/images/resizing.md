@@ -117,12 +117,14 @@ Upon retargeting, the expectations are:
 2. More sophisticated techniques to measure which parts of an image are important to human perception. These include attention models, eye tracking (gaze studies), and face detectors.
 ### General Retargeting framework
 Step 1: Define an energy function *E(I)*x -> This could be perceived interest, importance or saliency
+
 Step 2: Use one or more operators to change the image *I*
 
-In this example. we have chosen to retarget using cropping
 <div class="fig figcenter fighighlight">
-  <img src="{{ site.baseurl }}/assets/images/overview-targeting-example.png">
+    <img src="{{ site.baseurl }}/assets/images/overview-targeting-example.png">
+  <div class="figcaption">In this example. we have chosen to retarget using cropping</div>
 </div>
+
 
 
 
