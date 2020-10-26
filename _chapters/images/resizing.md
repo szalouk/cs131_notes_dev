@@ -116,12 +116,12 @@ Upon retargeting, the expectations are:
 1. A function, $S : p \rightarrow [0, 1]$, measures whether a pixel is important to an image.
 2. More sophisticated techniques to measure which parts of an image are important to human perception. These include attention models, eye tracking (gaze studies), and face detectors.
 ### General Retargeting framework
-Step 1: Define an energy function $E(I)$ -> This could be perceived interest, importance or saliency
+Step 1: Define an energy function $E(I)$. This could be perceived as the interest, importance or saliency.
 
 Step 2: Use one or more operators to change the image $I$.
 
 <div class="fig figcenter fighighlight">
-    <img src="{{ site.baseurl }}/assets/images/overview-targeting-example.png">
+    <img src="{{ site.baseurl }}/assets/images/overview-framework-example.png">
   <div class="figcaption">In this example. we have chosen to retarget using cropping</div>
 </div>
 
