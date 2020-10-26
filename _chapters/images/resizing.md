@@ -125,7 +125,7 @@ This should give you the primary tools to develop your notes. Check out the [mar
 
 <a name='subtopic-3-1'></a>
 ### Improving running time
-We can improve the running time of the Seam carving algorithm by accounting for locality of operations. The key observation here is to note that when we remove a seam from the image, most of the energy map $E$ remains unchanged. As such, we only need to recompute the values of $E$ in the neighborhood along the seam that was removed. This can be visualized through the figure below:
+While we've seen that seam removal can be very effective, it is also very computationally intensive. We can improve the running time of the Seam carving algorithm by accounting for locality of operations. The key observation here is to note that when we remove a seam from the image, most of the energy map $E$ remains unchanged. As such, we only need to recompute the values of $E$ in the neighborhood along the seam that was removed. This can be visualized through the figure below:
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
@@ -136,6 +136,15 @@ Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$
 
 <a name='subtopic-3-2'></a>
 ### Extension to both dimensions
+Consider the task of resizing an input image from size $m \times n$ to size $m' \times n'$, where $m > m'$ and $n > n'$. This leads to the question: What is the correct order of seam carving? Should we remove vertical seams first? Horizontal seams first? Or alternate between the two? The optimal ordering of horizontal and ordering seam removal is not very clear. However, we can use Dynamic Programming once again to define the search for an optimal order through the recursion relation:
+
+$$ \mathbf{T}(r,c) = \min \begin{Bmatrix} \mathbf{T}(r-1,c) + E(s^y(I_{m-r+1 \times n-c})), \\ \mathbf{T}(r,c-1) + E(s^x(I_{m-r \times n-c+1})) \end{Bmatrix} $$
+
+where $I_{m-r \times n-c}$ denotes an image of size $m-r \times n-c$, $E(s^y(I))$ is the cost of removing a horizontal seam and $E(s^x(I))$ is the cost of removing a vertical seam. We find the optimal order using a transport map $\mathbf{T}$ that specifies, for each desired target image size $m' \times n'$, the cost of the optimal sequence of horizontal and vertical seam removals. In other words, the entry $\mathbf{T}(r,c)$ holds the minimum cost needed to obtain an image of size $m-r \times n-c$. We compute $\mathbf{T}$ using dynamic programming. Starting at $\mathbf{T}(0,0) = 0$, we fill each entry $(r,c)$ choosing the best of two options:
+- Removing a horizontal seam $s^y$ from an image of size $m-r+1 \times n-c$ where we have already removed $r-1$ rows and $c$ columns.
+- Removing a vertical seam $s^x$ from an image of size $m-r \times n-c+1$ where we have already removes $r$ rows and $c-1$ columns.
+
+We store which of the two options was picked at each step of the dynamic programming algorithm in a $m \times n$ 1-bit map. For a target image size of $m' \times n'$ where $m' = m - r$ and $n' = n - c$, we backtrack from $\mathbf{T}(r,c)$ to $\mathbf{T}(0,0)$ and apply the seam removal operation at each step corresponding to the optimal order.
 
 <a name='subtopic-3-3'></a>
 ### Image expansion
