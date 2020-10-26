@@ -13,6 +13,14 @@ The table of contents can link to each section so long as you match the names ri
 	- [Subtopic 1-2](#subtopic-1-2)
 	- [Subtopic 1-3](#subtopic-1-3)
 - [Second Big Topic](#topic2)
+- [Seam carving - Extensions](#topic3)
+	- [Improving running time](#subtopic-3-1)
+	- [Extension to both dimensions](#subtopic-3-2)
+	- [Image expansion](#subtopic-3-3)
+	- [Multi-size image resizing](#subtopic-3-4)
+	- [Object removal](#subtopic-3-5)
+	- [Improvement: Forward energy](#subtopic-3-6)
+	- [Video seam carving](#subtopic-3-7)
 
 [//]: # (This is how you can make a comment that won't appear in the web page! It might be visible on some machines/browsers so use this only for development.)
 
@@ -99,3 +107,13 @@ As with the labelled equations, it makes a difference whether the lines above an
 <a name='Topic 2'></a>
 ## Second Big Topic
 This should give you the primary tools to develop your notes. Check out the [markdown quick reference](https://wordpress.com/support/markdown-quick-reference/) for any further Markdown functionality that you may find useful, and reach out to the teaching team on Piazza if you have any questions about how to create your lecture notes
+
+<a name ='Topic 3'></a>
+## Seam carving - Extensions
+### Improving running time
+### Extension to both dimensions
+### Image expansion
+### Multi-size image resizing
+### Object removal
+### Improvement: Forward energy
+### Video seam carving
