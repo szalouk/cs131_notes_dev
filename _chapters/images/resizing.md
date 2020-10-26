@@ -191,7 +191,7 @@ Here a vertical seam is represented as a set of $m$ pixels, $\{s_i^X\}_{i=1}^m$,
 
 Further, each pixel $s_i^X$ in the seam can be written as its coordinate $(x(i), i)$. $x(i)$ represents the pixel's column, or x-coordinate, while $i$ represents the pixel's row, or y-coordinate. As we can see, the y-coordinate goes from $1$ to $m$ indicating that we have exactly one pixel for each row of the image. 
 
-Note that we also have an additional constraint on the x-coordinates of the pixels in our seam, that is given by: $\forall i, |x(i)-x(i-1)| \leq 1$. This can be interpreted as for every $i$, or row, the x-coordinate of the pixel in the previous row $i - 1$ and the x-coordinate of the pixel in the current row $i$ must come from neighboring columns, such that the absolute difference in x-coordinate, or column, between these two pixels must be less than or equal to 1. This further ensures that our seam remains connected. 
+Note that we also have an additional constraint on the x-coordinates of the pixels in our seam, that is given by: $\forall i, \|x(i)-x(i-1)\| \leq 1$. This can be interpreted as for every $i$, or row, the x-coordinate of the pixel in the previous row $i - 1$ and the x-coordinate of the pixel in the current row $i$ must come from neighboring columns, such that the absolute difference in x-coordinate, or column, between these two pixels must be less than or equal to 1. This further ensures that our seam remains connected. 
 
 Similarly, the mathematical definition of a horizontal seam, a seam which can be used to reduce the height of an image, can be written as: 
 $$s^y = \{s_i^y\}_{i=1}^n = \{(j, y(j)\}^n_{i=1}, s.t. \forall j, |y(j)-y(j-1)| \leq 1$$
