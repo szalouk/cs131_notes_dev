@@ -109,11 +109,27 @@ As with the labelled equations, it makes a difference whether the lines above an
 This should give you the primary tools to develop your notes. Check out the [markdown quick reference](https://wordpress.com/support/markdown-quick-reference/) for any further Markdown functionality that you may find useful, and reach out to the teaching team on Piazza if you have any questions about how to create your lecture notes
 
 <a name ='Topic 3'></a>
+
+<a name='Subtopic 3-1'></a>
 ## Seam carving - Extensions
+
+<a name='Subtopic 3-2'></a>
 ### Improving running time
+
+<a name='Subtopic 3-3'></a>
 ### Extension to both dimensions
+
+<a name='Subtopic 3-4'></a>
 ### Image expansion
+
+<a name='Subtopic 3-5'></a>
 ### Multi-size image resizing
+
+<a name='Subtopic 3-6'></a>
 ### Object removal
+
+<a name='Subtopic 3-7'></a>
 ### Improvement: Forward energy
+
+<a name='Subtopic 3-8'></a>
 ### Video seam carving
