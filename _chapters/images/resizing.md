@@ -132,7 +132,7 @@ While we've seen that seam removal can be very effective, it is also very comput
   <div class="figcaption">After removing the seam pixels marked in red, we only recompute $E$ for the neighbourhood pixels marked in yellow. The values of $E$ remain unchanged for most of the image pixels, marked in white.</div>
 </div>
 
-Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$, the new run time complexity of the optimized Seam carving algorithm becomes $O((n-n')m)$, since each update to $E$ now takes $O(m)$ time.  As such, by accounting for locality of operations, the Seam carving algorithm is much faster than the the original run time complexity of $O((n-n')mn)$.
+Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$, the new run time complexity of the optimized Seam carving algorithm becomes $O((n-n')m)$, since the each update to $E$ now takes $O(m)$ time.  Note that this is an order of magnitude faster than the original run time complexity of $O((n-n')mn)$.
 
 <a name='subtopic-3-2'></a>
 ### Extension to both dimensions
@@ -146,8 +146,38 @@ where $I_{m-r \times n-c}$ denotes an image of size $m-r \times n-c$, $E(s^y(I))
 
 We store which of the two options was picked at each step of the dynamic programming algorithm in a $m \times n$ 1-bit map. For a target image size of $m' \times n'$ where $m' = m - r$ and $n' = n - c$, we backtrack from $\mathbf{T}(r,c)$ to $\mathbf{T}(0,0)$ and apply the seam removal operation at each step corresponding to the optimal order.
 
+
 <a name='subtopic-3-3'></a>
 ### Image expansion
+Seams carving can also be used to increase the size of images. By expanding the least import areas of the image, as indicated by the seams, we can increase the dimensions of the image without distorting the main content. 
+
+#### Pitfall
+If we use a naive approach of iteratively computing the lowest energy seam and adding it to our input image, we will run into the pitfall of selecting the same seam at each iteration. As such, when expanding an image's width by $k$ pixels, the lowest energy seam in the image will be duplicated repeatedly $k$ times, giving us undesirable results as depicted below:
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
+
+Note that we have many columns containing repeated pixels in the image above. This effect happens because the lowest energy seam is always the same after we replicate that seam again in the image.
+
+#### Solution
+A solution to this pitfall is to calculate as many seams as we need to insert into the image, so that we only duplicate each seam once. To expand an image by $k$ pixels, we compute the $k$ seams with the lowest energy at once, and duplicate each of them. Doing so gives us much more desirable results as depicted below:
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
+
+This method produces a far higher quality expanded image compared to the naive approach. Furthermore, compared to scaling, our content-aware resizing produces much more please results.
+
+#### Combined Insert and Remove
+Another way of using this algorithm is combining insertion and removal of seams. This is very desirable to resize dimensions of an image different. For example, given the input image on the left, we can insert vertical seams to make the image wider, and remove horizontal seams to make the image shorter in height. Our content-aware resizing once again produces far more pleasing results than simple scaling.
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
 
 <a name='subtopic-3-4'></a>
 ### Multi-size image resizing
