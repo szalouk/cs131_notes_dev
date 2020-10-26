@@ -115,6 +115,7 @@ Upon retargeting, the expectations are:
 ### Importance Measures
 1. A function, $S : p \rightarrow [0, 1]$, measures whether a pixel is important to an image.
 2. More sophisticated techniques to measure which parts of an image are important to human perception. These include attention models, eye tracking (gaze studies), and face detectors.
+
 ### General Retargeting framework
 Step 1: Define an energy function $E(I)$. This could be perceived as the interest, importance or saliency.
 
