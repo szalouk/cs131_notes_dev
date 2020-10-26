@@ -125,6 +125,14 @@ This should give you the primary tools to develop your notes. Check out the [mar
 
 <a name='subtopic-3-1'></a>
 ### Improving running time
+We can improve the running time of the Seam carving algorithm by accounting for locality of operations. The key observation here is to note that when we remove a seam from the image, most of the energy map $E$ remains unchanged. As such, we only need to recompute the values of $E$ in the neighborhood along the seam that was removed. This can be visualized through the figure below:
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
+
+Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$, the new run time complexity of the optimized Seam carving algorithm becomes $O((n-n')m)$, since the each update to $E$ now takes $O(m)$ time.  Note that this is an order of magnitude faster than the original run time complexity of $O((n-n')mn)$.
 
 <a name='subtopic-3-2'></a>
 ### Extension to both dimensions
