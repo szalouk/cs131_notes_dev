@@ -337,7 +337,7 @@ This method produces a far higher quality expanded image compared to the naive a
 </div>
 
 #### Combined Insert and Remove
-Another way of using this algorithm is combining insertion and removal of seams. This is very desirable to resize dimensions of an image different. For example, given the input image on the left, we can insert vertical seams to make the image wider, and remove horizontal seams to make the image shorter in height. Our content-aware resizing once again produces far more pleasing results than simple scaling.
+Another way of using this algorithm is combining insertion and removal of seams. This is very desirable when we want to reduce one dimension while expanding the other. For example, given the input image on the left, we can insert vertical seams to make the image wider, and remove horizontal seams to make the image shorter in height. Our content-aware resizing once again produces far more pleasing results than simple scaling.
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/insert-and-remove.png">
