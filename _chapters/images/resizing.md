@@ -165,17 +165,22 @@ Note that we have many columns containing repeated pixels in the image above. Th
 A solution to this pitfall is to calculate as many seams as we need to insert into the image, so that we only duplicate each seam once. To expand an image by $k$ pixels, we compute the $k$ seams with the lowest energy at once, and duplicate each of them. Doing so gives us much more desirable results as depicted below:
 
 <div class="fig figcenter fighighlight">
-  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <img src="{{ site.baseurl }}/assets/images/seam-expansion.png">
   <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
 </div>
 
 This method produces a far higher quality expanded image compared to the naive approach. Furthermore, compared to scaling, our content-aware resizing produces much more please results.
 
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam-scaling.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
+
 #### Combined Insert and Remove
 Another way of using this algorithm is combining insertion and removal of seams. This is very desirable to resize dimensions of an image different. For example, given the input image on the left, we can insert vertical seams to make the image wider, and remove horizontal seams to make the image shorter in height. Our content-aware resizing once again produces far more pleasing results than simple scaling.
 
 <div class="fig figcenter fighighlight">
-  <img src="{{ site.baseurl }}/assets/images/seam_runtime.png">
+  <img src="{{ site.baseurl }}/assets/images/insert-and-remove.png">
   <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
 </div>
 
