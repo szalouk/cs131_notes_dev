@@ -12,7 +12,10 @@ The table of contents can link to each section so long as you match the names ri
 	- [Subtopic 1-1](#subtopic-1-1)
 	- [Subtopic 1-2](#subtopic-1-2)
 	- [Subtopic 1-3](#subtopic-1-3)
-- [Second Big Topic](#topic2)
+- [Seam Carving Algorithm](#seam-carving-algorithm)
+	- [Overview](#overview)
+	- [Implementation using Dynamic Programming](#implementation)
+	- [Results](#results)
 - [Seam carving - Extensions](#topic3)
 	- [Improving running time](#subtopic-3-1)
 	- [Extension to both dimensions](#subtopic-3-2)
@@ -104,9 +107,18 @@ As with the labelled equations, it makes a difference whether the lines above an
 
 
 
-<a name='topic2'></a>
-## Second Big Topic
+<a name='seam-carving-algorithm'></a>
+## Seam Carving Algorithm
 This should give you the primary tools to develop your notes. Check out the [markdown quick reference](https://wordpress.com/support/markdown-quick-reference/) for any further Markdown functionality that you may find useful, and reach out to the teaching team on Piazza if you have any questions about how to create your lecture notes
+
+<a name='overview'></a>
+### Overview 
+
+<a name='Implementation'></a>
+### Implementation
+
+<a name='Results'></a>
+### Results
 
 <a name ='topic3'></a>
 ## Seam carving - Extensions
