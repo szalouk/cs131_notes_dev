@@ -156,7 +156,7 @@ If we use a naive approach of iteratively computing the lowest energy seam and a
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/seam-pitfall.png">
-  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+  <div class="figcaption">In the naive approach, same seam will be inserted repeatedly. This is is because the lowest energy seam remains the same after it is replicated in the image.</div>
 </div>
 
 Note that we have many columns containing repeated pixels in the image above. This effect happens because the lowest energy seam is always the same after we replicate that seam again in the image.
@@ -166,14 +166,14 @@ A solution to this pitfall is to calculate as many seams as we need to insert in
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/seam-expansion.png">
-  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+  <div class="figcaption">Computing the $k$ seams with the lowest energy at once and duplicating them yields much more pleasing results. Note that with this method, an image cannot be expanded by more than a factor of $2$, since each seam is only duplicated once.</div>
 </div>
 
-This method produces a far higher quality expanded image compared to the naive approach. Furthermore, compared to scaling, our content-aware resizing produces much more please results.
+This method produces a far higher quality expanded image compared to the naive approach. Furthermore, compared to scaling, our content-aware resizing produces much more pleasing results.
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/seam-scaling.png">
-  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+  <div class="figcaption">The content-aware resizing preserves the important areas of the image while replicating unimportant, low-energy areas. By contrast, simple scaling distorts the entire image.</div>
 </div>
 
 #### Combined Insert and Remove
@@ -181,7 +181,7 @@ Another way of using this algorithm is combining insertion and removal of seams.
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/insert-and-remove.png">
-  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+  <div class="figcaption">Using content-aware resizing preserves the main areas of the input image while duplicating, removing the less important low-energy areas. This produces much more appealing results than simple scaling which introduces heavy distortion throughout, and whose affect is amplified in the case of uneven scaling of width and height.</div>
 </div>
 
 <a name='subtopic-3-4'></a>
