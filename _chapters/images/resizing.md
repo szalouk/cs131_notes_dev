@@ -137,6 +137,7 @@ Image of size $m x n$
 The first key idea is that we will want to remove pixels from the image which are the least important to the content of the image. Intuitively, this makes sense bceause if we have to remove pixels from our image, we should be removing the least important pixels rather than other more important pixels. This way, we will be retaining as much information in the image as possible, and avoid loss of content during our image summarization. But how do we decide which pixels are least important? We will define the least important pixels as the pixels which have the least **energy**. The **energy** of a pixel measures how much that pixel stands out from its surroundings, and thus how important the pixel is.
 
 We can calculate the energy of a pixel through using energy functions. One such possible energy function, as discussed in class, is a gradient-based energy function, where we measure each pixel's energy as the sum of its horizontal and vertical gradients:
+
 $$E(I) = |\frac{\partial}{\partial x} I| + |\frac{\partial}{\partial y} I|$$ 
 
 Although other energy functions are also possible, this is a simple gradient-based energy function, which happens to work very well. To understand, why this gradient-based energy function works so well, it is important to note that pixels with lower energy as determined by this energy function will have smaller gradients. Pixels with smaller gradients will often exist in the smooth areas of the image. Since human perception is really sensitive to edges and contours in images, pixels forming edges in the image are much more important in providing geometric constraints and information in the image than pixels from smoother areas. Therefore, removing pixels from smooth areas in the image, which have lower gradients, instead of pixels from the edges, which have higher gradients, will help preserve a lot of the important content in the image. Another positive to using this gradient-based energy function is because it is quite easy to calculate, while also providing very useful results!
@@ -194,6 +195,7 @@ Further, each pixel $s_i^X$ in the seam can be written as its coordinate $(x(i),
 Note that we also have an additional constraint on the x-coordinates of the pixels in our seam, that is given by: $\forall i, \|x(i)-x(i-1)\| \leq 1$. This can be interpreted as for every $i$, or row, the x-coordinate of the pixel in the previous row $i - 1$ and the x-coordinate of the pixel in the current row $i$ must come from neighboring columns, such that the absolute difference in x-coordinate, or column, between these two pixels must be less than or equal to 1. This further ensures that our seam remains connected. 
 
 Similarly, the mathematical definition of a horizontal seam, a seam which can be used to reduce the height of an image, can be written as: 
+
 $$s^y = \{s_i^y\}_{i=1}^n = \{(j, y(j)\}^n_{i=1}, s.t. \forall j, |y(j)-y(j-1)| \leq 1$$
 
 Note that here $n$ represents the number of columns in our image; we will have exactly one pixel in our horizontal seam per column in our image. We can very easily use very similar logic as above to parse this mathematical statement, and this will be left as an exercise for the reader. 
@@ -206,10 +208,11 @@ Depiction of a few out of numerous seams that can exist in an image
 
 To find the right seam to remove, we can rely on ideas that we have already developed in previous sections. As a reminder, in our key idea 1 discussion, we have already highlighted that we want to remove pixels with the lowest energy from our image, because these pixels are less important to our image than pixels with higher energy. Further, we can borrow the idea of removing the lowest cumulative energy column to now instead remove the lowest cumulative energy vertical seam from our image. With that, we will remove the seam which minimizes our energy function. In mathematical notation, we will be removing vertical seam $s^{*}$, where:
 
-$$s^* = \arg\min_{s} E(s).$$
+$$s^* = \arg\min_{s} E(s)$$
 
 In this case, our energy function $E$, will be defined as the gradient-based energy function, we discussed in previous sections:
-$$E(I) = |\frac{\partial}{\partial x} I| + |\frac{\partial}{\partial y} I|.$$ 
+
+$$E(I) = |\frac{\partial}{\partial x} I| + |\frac{\partial}{\partial y} I|$$ 
 
 
 <a name='Implementation'></a>
@@ -246,7 +249,7 @@ Since we are trying to minimize $M(i,j)$, then we should then take the cost of t
 
 In mathematical notation, this **recursion relation** can be written as:
 
-$$M(i,j) = E(i,j) + \min\{M(i-1,j-1), M(i-1,j), M(i-1,j+1)\}.$$
+$$M(i,j) = E(i,j) + \min\left\{M(i-1,j-1), M(i-1,j), M(i-1,j+1)\right\}$$
 
 We now have the invariant property, $M(i,j)$, the minimal cost of a seam that goes through pixel $(i,j)$ and the recurrence relation above.
 
@@ -292,7 +295,7 @@ If we use a naive approach of iteratively computing the lowest energy seam and a
 
 <div class="fig figcenter fighighlight">
   <img src="{{ site.baseurl }}/assets/images/seam-pitfall.png">
-  <div class="figcaption">In the naive approach, same seam will be inserted repeatedly. This is is because the lowest energy seam remains the same after it is replicated in the image.</div>
+  <div class="figcaption">In the naive approach, the same seam will be inserted repeatedly. This is is because the lowest energy seam remains the same after it is replicated in the image.</div>
 </div>
 
 Note that we have many columns containing repeated pixels in the image above. This effect happens because the lowest energy seam is always the same after we replicate that seam again in the image.
