@@ -306,6 +306,45 @@ where $I_{m-r \times n-c}$ denotes an image of size $m-r \times n-c$, $E(s^y(I))
 
 We store which of the two options was picked at each step of the dynamic programming algorithm in a $m \times n$ 1-bit map. For a target image size of $m' \times n'$ where $m' = m - r$ and $n' = n - c$, we backtrack from $\mathbf{T}(r,c)$ to $\mathbf{T}(0,0)$ and apply the seam removal operation at each step corresponding to the optimal order.
 
+For more clarity, let us now consider a simple example to better understand recursion relation. Consider the task of resizing a $4 \times 4$ input image to size $2 \times 3$. In this case, we want to remove $r=2$ rows and $c=1$ columns. We can express the recursion relation for this simple case as:
+
+$$ \mathbf{T}(2,1) = \min \begin{Bmatrix} \mathbf{T}(1,1) + E(s^y(I_{3 \times 3})), \\ \mathbf{T}(2,0) + E(s^x(I_{2 \times 4})) \end{Bmatrix} $$
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_both_dimensions_a.png">
+  <div class="figcaption">Since the output image is of size $2 \times 3$, we could have arrived at this point through one of two options:
+- By removing a horizontal seam from a $3 \times 3$ image, indicated as $\mathbf{T}(1,1) + E(s^y(I_{3 \times 3}))$
+- By removing a vertical seam from a $2 \times 4$ image, indicated as $\mathbf{T}(2,0) + E(s^x(I_{2 \times 4}))$</div>
+</div>
+
+The recursion relation selects the lowest energy between the two possible options. Contiuing, let us first inspect the left-hand side of the recursion. The recursion relation for $\mathbf{T}(1,1)$ can likewise be written as:
+
+$$ \mathbf{T}(1,1) = \min \begin{Bmatrix} \mathbf{T}(0,1) + E(s^y(I_{4 \times 3})), \\ \mathbf{T}(1,0) + E(s^x(I_{3 \times 4})) \end{Bmatrix} $$
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_both_dimensions_b.png">
+  <div class="figcaption">Intuitively, since the image is of size $3 \times 3$, we could have arrived at this point through one of two options:
+- By removing a horizontal seam from a $4 \times 3$ image, indicated as $\mathbf{T}(0,1) + E(s^y(I_{4 \times 3}))$
+- By removing a vertical seam from a $3 \times 4$ image, indicated as $\mathbf{T}(1,0) + E(s^x(I_{3 \times 4}))$</div>
+</div>
+
+The recursion relation selects the lowest energy between the two possible options. Moreover, note that the recursion relation reaches the base case from both $\mathbf{T}(0,1)$ and $\mathbf{T}(1,0)$. Intuitively, we arrive at $\mathbf{T}(0,1)$ by removing a vertical seam, and $\mathbf{T}(1,0)$ by removing a horizontal seam from the original image. Therefore, $\mathbf{T}(0,1) = E(s^x(I_{4 \times 4}))$ and $\mathbf{T}(1,0) = E(s^y(I_{4 \times 4}))$, since our base case is $\mathbf{T}(0,0) = 0$.
+
+Similarly, we can traverse the recursion tree for $\mathbf{T}(2,0) + E(s^x(I_{2 \times 4}))$ as shown in the figure below:
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_both_dimensions_c.png">
+  <div class="figcaption">In this recursion tree, we are considering the energy of removing 2 horizontal seams from the original $4 \times 4$ input image, leading to a $2 \times 4$ image.</div>
+</div>
+
+Putting it all together, the full recursion tree for our simple example is shown below. The dynamic programming algorithm selects the minimum energy between two options at each stage of our recursion, as explained above.
+
+<div class="fig figcenter fighighlight">
+  <img src="{{ site.baseurl }}/assets/images/seam_both_dimensions_all.png">
+  <div class="figcaption">The full recursion tree will select the lowest energy path from the input $4 \times 4$ image to the desired resized $2 \times 3$ image. At each step, we consider two options:
+- Removing a horizontal seam $s^y$ from an image of size $m-r+1 \times n-c$ where we have already removed $r-1$ rows and $c$ columns.
+- Removing a vertical seam $s^x$ from an image of size $m-r \times n-c+1$ where we have already removes $r$ rows and $c-1$ columns.
+We track the choice we make at each step of recursion. After the entire recursion tree has been explored, we propogate our choices backwards to find our optimal ordering.</div>
+</div>
 
 <a name='subtopic-3-3'></a>
 ### Image expansion
