@@ -330,7 +330,11 @@ Intuitively, since the image is of size $3 \times 3$, we could have arrived at t
   <img src="{{ site.baseurl }}/assets/images/seam_both_dimensions_b.png">
 </div>
 
-The recursion relation selects the lowest energy between the two possible options. Moreover, note that our recursion reaches the base case from both $\mathbf{T}(0,1)$ and $\mathbf{T}(1,0)$. This is because we arrive at $\mathbf{T}(0,1)$ by removing a vertical seam from the original image, and $\mathbf{T}(1,0)$ by removing a horizontal seam from the original image. Therefore, $\mathbf{T}(0,1) = \mathbf{T}(0,0) + E(s^x(I_{4 \times 4})) = E(s^x(I_{4 \times 4}))$ and $\mathbf{T}(1,0) = \mathbf{T}(0,0) + E(s^y(I_{4 \times 4})) = E(s^y(I_{4 \times 4}))$, since for the base case $\mathbf{T}(0,0) = 0$.
+The recursion relation selects the lowest energy between the two possible options. Moreover, note that our recursion reaches the base case from both $\mathbf{T}(0,1)$ and $\mathbf{T}(1,0)$. This is because we arrive at $\mathbf{T}(0,1)$ by removing a vertical seam from the original image, and $\mathbf{T}(1,0)$ by removing a horizontal seam from the original image. Therefore, we have that
+
+$$\mathbf{T}(0,1) = \mathbf{T}(0,0) + E(s^x(I_{4 \times 4})) = E(s^x(I_{4 \times 4}))$$
+$$\mathbf{T}(1,0) = \mathbf{T}(0,0) + E(s^y(I_{4 \times 4})) = E(s^y(I_{4 \times 4}))$$
+since for the base case $\mathbf{T}(0,0) = 0$.
 
 Similarly, we can traverse the recursion tree for $\mathbf{T}(2,0)$ as shown in below:
 <div class="fig figcenter fighighlight">
