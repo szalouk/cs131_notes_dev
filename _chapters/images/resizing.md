@@ -355,7 +355,7 @@ We track the choice we make at each step of recursion. After the entire recursio
 
 <a name='subtopic-3-3'></a>
 ### Image expansion
-Seams carving can also be used to increase the size of images. By expanding the least import areas of the image, as indicated by the seams, we can increase the dimensions of the image without distorting the main content. 
+Seams carving can also be used to increase the size of images. By expanding the least important areas of the image, as indicated by the seams, we can increase the dimensions of the image without distorting the main content. 
 
 #### Pitfall
 If we use a naive approach of iteratively computing the lowest energy seam and adding it to our input image, we will run into the pitfall of selecting the same seam at each iteration. As such, when expanding an image's width by $k$ pixels, the lowest energy seam in the image will be duplicated repeatedly $k$ times, producing undesirable results as depicted below:
