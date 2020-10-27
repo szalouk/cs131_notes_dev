@@ -292,7 +292,7 @@ While we've seen that seam removal can be very effective, it is also very comput
   <div class="figcaption">After removing the seam pixels marked in red, we only recompute $E$ for the neighbourhood pixels marked in yellow. The values of $E$ remain unchanged for most of the image pixels, marked in white.</div>
 </div>
 
-Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$, the new run time complexity of the optimized Seam carving algorithm becomes $O((n-n')m)$, since the each update to $E$ now takes $O(m)$ time.  Note that this is an order of magnitude faster than the original run time complexity of $O((n-n')mn)$.
+Note that for an image of size $m \times n$, where we want to resize $n$ to $n'$, the new run time complexity of the optimized Seam carving algorithm becomes $O((n-n')m)$, since each update to $E$ now takes $O(m)$ time.  Note that this is an order of magnitude faster than the original run time complexity of $O((n-n')mn)$.
 
 <a name='subtopic-3-2'></a>
 ### Extension to both dimensions
