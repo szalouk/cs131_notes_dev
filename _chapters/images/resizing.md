@@ -473,7 +473,7 @@ Here, it can be noted that we only take one gradient (the two botom pixels) sinc
 Ultimately, we can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/51NGf0c.png" width="150">
+  <img src="https://i.imgur.com/51NGf0c.png" width="300">
 </div>
 
 <a name='subtopic-3-7'></a>
