@@ -443,7 +443,7 @@ As a result, one thing we could consider is, rather than removing the lowest-ene
 We can start off this procedure by looking at each of the ways in which we can remove the seams. The image below illustrates that we can remove the left seam, the middle seam, and the right seam as valid options. 
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/UCJJa1G.png">
+  <img src="https://i.imgur.com/UCJJa1G.png" width="500">
 </div>
 
 Let us first consider the case of removing the left seam.
@@ -461,7 +461,7 @@ Once we remove the seam in red, we can calculate the new amount of energy introd
 For the middle seam, the calculation looks as follows:
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/rSscXsY.png">
+  <img src="https://i.imgur.com/rSscXsY.png" width="500">
 </div>
 
 Here, it can be noted that we only take one gradient (the two botom pixels) since we don't want to double-count. Ultimately, this can lead to the following new algorithm:
@@ -473,7 +473,7 @@ Here, it can be noted that we only take one gradient (the two botom pixels) sinc
 Ultimately, we can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/51NGf0c.png">
+  <img src="https://i.imgur.com/51NGf0c.png" width="500">
 </div>
 
 <a name='subtopic-3-7'></a>
@@ -508,8 +508,8 @@ Notice that the result using the naive approach is very jittery. Let's improve t
 Watch 1:11-2:13 of [the video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out an example of video retargeting and a high-level walkthrough of the 3D approach. Specifically, we replace the 2D dynamic programming algorithm with a 3D graph cut approach. We define a grid-like graph, where the nodes are pixels, and we add a source and target virtual nodes on both sides of the cube.
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/Tm0fzbP.png">
-  <img src="https://i.imgur.com/S2HHEoH.png">
+  <img src="https://i.imgur.com/Tm0fzbP.png" width="500">
+  <img src="https://i.imgur.com/S2HHEoH.png" width="500">
   <div class="figcaption">A cut in the graph defines a surface seam, and the intersection of this 2D surface with each frame defines the seam path on that frame. As such, we can guarantee that the seams are monotonic and connected.</div>
 </div>
 
