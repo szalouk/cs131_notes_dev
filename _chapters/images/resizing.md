@@ -67,20 +67,15 @@ Before diving into the algorithm, let us first discuss some key ideas behind the
 
 For more clarity, we will be using an example image to guide us and help us understand the key ideas behind the seam-carving algorithm. 
 
-![](https://i.imgur.com/cCSCQ4Y.png)
-*Example Image with gradient-based energy image*
-*(Courtesy of CS131 Lecture 11 Slides)*
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/cCSCQ4Y.png">
+  <div class="figcaption">Example Image with gradient-based energy image *(Courtesy of CS131 Lecture 11 Slides)*</div>
+</div>
 
 Take for instance a situation in which we have to **summarize**, or reduce, an image of size m x n to a new smaller size m x n' where n' < n. In this case, our seam-carving algorithm will need to remove m x (n - n') pixels from the image. But which pixels should we remove?
 
-
-<div class="fig figcenter fighighlight">
-  <img src="{{ site.baseurl }}/assets/examples/challenges.jpeg">
-  <div class="figcaption"></div>
-</div>
-Image of size $m x n$
-
 **Key Idea 1: We want to remove the pixels with the least *energy*.**
+
 The first key idea is that we will want to remove pixels from the image which are the least important to the content of the image. Intuitively, this makes sense because if we have to remove pixels from our image, we should be removing the least important pixels rather than other more important pixels. This way, we will be retaining as much information in the image as possible, and avoid loss of content during our image summarization. But how do we decide which pixels are least important? We will define the least important pixels as the pixels which have the least **energy**. The **energy** of a pixel measures how much that pixel stands out from its surroundings, and thus how important the pixel is.
 
 We can calculate the energy of a pixel through using energy functions. One such possible energy function, as discussed in class, is a gradient-based energy function, where we measure each pixel's energy as the sum of its horizontal and vertical gradients:
@@ -90,6 +85,7 @@ $$E(I) = |\frac{\partial}{\partial x} I| + |\frac{\partial}{\partial y} I|$$
 Although other energy functions are also possible, this is a simple gradient-based energy function, which happens to work very well. To understand, why this gradient-based energy function works so well, it is important to note that pixels with lower energy as determined by this energy function will have smaller gradients. Pixels with smaller gradients will often exist in the smooth areas of the image. Since human perception is really sensitive to edges and contours in images, pixels forming edges in the image are much more important in providing geometric constraints and information in the image than pixels from smoother areas. Therefore, removing pixels from smooth areas in the image, which have lower gradients, instead of pixels from the edges, which have higher gradients, will help preserve a lot of the important content in the image. Another positive to using this gradient-based energy function is because it is quite easy to calculate, while also providing very useful results!
 
 **Key Idea 2: We want to remove pixels by seams.**
+
 Now that we have a guideline on what type of pixels to remove from the image, pixels with lower energy, the question stands, which $m x (n - n')$ pixels from the original image should we remove? We will introduce several possible ways of choosing pixels to remove from the image, and highlight the flaw of each of these methods, before proceeding into a discussion of the seam-carving algorithm.
 
 **Optimal Removal**
@@ -235,15 +231,13 @@ In step 1, we have a loop that repeats $n-n'$ times. This is because we have $n$
 In the loop, we have to compute the Energy Matrix $E$ of the image, find the optimal seam $s$ in $E$, and then remove $s$ from $im$. At the conclusion of the loop, we return our image $im$. We can pseudocode the algorithm as follows:
 
 ```python
-seam_carving(img,n'): // size(im) = mxn
-    Do (n-n') times:
+seam_carving(img,n_new): // size(im) = mxn
+    Do (n-n_new) times:
         E := compute energy map on im
 	s := find optimal seam in E
 	im := remove s fromim
     return im
 ```
-
-![](https://i.imgur.com/SGVd6sJ.png)
 
 Since the running time of each step in the loop ($1.1$, $1.2$, $1.3$) is $O(mn)$, the overall running time would be $O(dmn)$, where $d = (n - n')$.
 
