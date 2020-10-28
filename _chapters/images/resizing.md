@@ -389,7 +389,7 @@ Another way of using this algorithm is combining insertion and removal of seams.
 ### Multi-size image resizing
 So far, all of our images have primarily operated in the case where we know the output size of the final image. However, what happens if we don't have this information readily available to us? In this case, we can create a new representation of these images that enable us to adapt any given image to different sizes.
 
-First, we must compute all the seams in an image. Next, we can store these precomputed vertical and horizontal seams alongside the image content in order to later map to any changes that we need to be made. This way we can convenientl add and remove seams when the image needs to be resized.
+First, we must compute all the seams in an image. Next, we can store these precomputed vertical and horizontal seams alongside the image content in order to later map to any changes that we need to be made. This way we can conveniently add and remove seams when the image needs to be resized.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/XMkkkFi.jpg">
@@ -407,7 +407,7 @@ In order to accomplish this, what we can consider doing is by manipulating the e
 
 $$M(i,j) = E(i,j) + \min\left\{M(i-1,j-1), M(i-1,j), M(i-1,j+1)\right\}$$
 
-We can accomplish the goal of object removal by assigning a very low energy value to the piels in green while assigning a very high energy value $E$ to the pixels in red. The SEAM carving will always create paths going through the green pixels, as a result, while avoiding paths with the red pixels, thus accomplishing the task of object removal. 
+We can accomplish the goal of object removal by assigning a very low energy value to the pixels in green while assigning a very high energy value $E$ to the pixels in red. The SEAM carving will always create paths going through the green pixels, as a result, while avoiding paths with the red pixels, thus accomplishing the task of object removal. 
 
 <a name='subtopic-3-5.5'></a>
 ### Limitations
