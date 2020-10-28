@@ -4,9 +4,7 @@ keywords: (insert comma-separated keywords here)
 order: 11 # Lecture number for 2020
 ---
 
-You can start your notes here before you start diving into specific topics under each heading. This is a useful place to define the topic of the day and lay out the structure of your lecture notes. You'll edit the Markdown file, in this case template.md, which will automatically convert to HTML and serve this web page you're reading! 
-
-The table of contents can link to each section so long as you match the names right (see comments in template.md for more elaboration on this!). This Markdown to HTML mapping doesn't like periods in the section titles and won't link them from the table of contents, so use dashes instead if you need to.
+In today's world, we use devices of various shapes and sizes to consume information and display images and videos. When we go from a laptop to a mobile phone, we see that the image size is significantly smaller and its pixel information is changed. This topic introduces the techniques used for resizing images while accounting for important content and limiting artifacts that may be caused by rescaling.
 
 - [Image Retargeting](#image-retargeting-overview)
 - [Seam Carving Algorithm](#seam-carving-algorithm)
@@ -30,8 +28,6 @@ The table of contents can link to each section so long as you match the names ri
 
 <a name='image-retargeting-overview'></a>
 ## Image Retargeting and Resizing Overview
-In today's world, we use devices of various shapes and sizes to consume information and display images and videos. When we go from a laptop to a mobile phone, we see that the image size is significantly smaller and its pixel information is changed. This topic introduces the techniques used for resizing images while accounting for important content and limiting artifacts that may be caused by rescaling.
-
 ### Problem Statement
 Input an image of size $n \times m$ and return an image of new size $n' \times m'$ which will be a good representative of original image. 
 Upon retargeting, the expectations are:
