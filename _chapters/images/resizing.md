@@ -127,14 +127,13 @@ Step 2: Use one or more operators to change the image $I$.
 </div>
 
 
-
 <a name='seam-carving-algorithm'></a>
 ## Seam Carving Algorithm
 <a name='overview'></a>
 ### Overview
 
 **Motivation**
-We have already seen how methods such as rescaling or cropping images without paying attention to the content of the image often results in suboptimal results, such as introducing artifacts, removing content, violating geometric constraints, or losing important content and geometric structures in the image. In this section, we will introduce the seam-carving algorithm, a powerful algorithm that will perform content-aware resizing of images to different sizes. Seam-carving will help us prevent a lot of the issues that result from other content-unaware retargetting or resizing methods. The seam-carving algorithm performs content-aware resizing of images by selectively and intelligently adding or removing pixels from the image, all while paying careful attention to the content in the image. 
+We have already seen how methods such as rescaling or cropping images without paying attention to the content of the image often result in suboptimal results, such as introducing artifacts and losing important content and geometric structures in the image. In this section, we will introduce the seam-carving algorithm, a powerful algorithm that will perform content-aware resizing of images to different sizes. Seam-carving will help us prevent a lot of the issues that result from other content-unaware retargetting or resizing methods. The seam-carving algorithm performs content-aware resizing of images by selectively - and intelligently - adding or removing pixels from the image, while paying careful attention to the content in the image. 
 
 **Key Ideas Behind Seam Carving**
 Before diving into the algorithm, let us first discuss some key ideas behind the seam-carving algorithm. 
@@ -155,7 +154,7 @@ Take for instance a situation in which we have to **summarize**, or reduce, an i
 Image of size $m x n$
 
 **Key Idea 1: We want to remove the pixels with the least *energy*.**
-The first key idea is that we will want to remove pixels from the image which are the least important to the content of the image. Intuitively, this makes sense bceause if we have to remove pixels from our image, we should be removing the least important pixels rather than other more important pixels. This way, we will be retaining as much information in the image as possible, and avoid loss of content during our image summarization. But how do we decide which pixels are least important? We will define the least important pixels as the pixels which have the least **energy**. The **energy** of a pixel measures how much that pixel stands out from its surroundings, and thus how important the pixel is.
+The first key idea is that we will want to remove pixels from the image which are the least important to the content of the image. Intuitively, this makes sense because if we have to remove pixels from our image, we should be removing the least important pixels rather than other more important pixels. This way, we will be retaining as much information in the image as possible, and avoid loss of content during our image summarization. But how do we decide which pixels are least important? We will define the least important pixels as the pixels which have the least **energy**. The **energy** of a pixel measures how much that pixel stands out from its surroundings, and thus how important the pixel is.
 
 We can calculate the energy of a pixel through using energy functions. One such possible energy function, as discussed in class, is a gradient-based energy function, where we measure each pixel's energy as the sum of its horizontal and vertical gradients:
 
@@ -194,24 +193,24 @@ What if we tried removing entire columns all at once then in order to avoid this
 *Result of removing $n - n'$ least-total-energy columns from original image*
 *(Courtesy of CS131 Lecture 11 Slides)*
 
-This sounds like a great idea at first and we can see that this is a clear improvement from our previous methods of removing pixels. However, upon further inspection, we can see that this solution is not entirely perfect either. It introduces a lot of artifacts. For example, applying this method of removing least energy columns causes some geometries in the original image to lose its shape. For example, let's inspect the grey diagonal platform stretching across our example image. The diagonal loses its shape using this method since entire columns making up the diagonal were removed without paying much attention to the diagonal's geometry. 
+This sounds like a great idea at first and we can see that this is a clear improvement from our previous methods of removing pixels. However, upon further inspection, we can see that this solution is not entirely perfect either. It introduces a lot of artifacts. For example, applying this method of removing least energy columns causes some geometries in the original image to lose its shape. For example, let's inspect the grey diagonal platform stretching across the bottom-side of our example image. The diagonal loses its shape using this method since entire columns making up the diagonal were removed without paying much attention to the diagonal's geometry. 
 
 So far, noticeably, we have tried methods, ranging from unconstrained (optimal) to more constrained (least-energy columns). However, none of these methods produce appealing results. They all have their faults. This is where the seam carving algorithm comes in. It introduces a very important idea and method on how to remove pixels, that is to remove pixels by **seams**.
 
 **What is a seam?**
 
-A **seam** is defined as a connected path of pixels that stretch across the image, either from the bottom to the top of the image or from the left to the right of the image. For vertical seams that stretch from the bottom of the top of the image, only one pixel can be in each row. For horizontal seams that stretch from the left to the right of the image, only one pixel can be in each column. 
+A **seam** is defined as a connected path of pixels that stretch across the image, either from the bottom to the top of the image or from the left to the right of the image. For vertical seams that stretch from the bottom of the top of the image, there will be exactly one pixel in each row. For horizontal seams that stretch from the left to the right of the image, there will be exactly one pixel in each column. 
 
 ![](https://i.imgur.com/FwVjHOy.png)
 Example of a vertical seam stretching from bottom to top of an image
 
-In mathematical notation, a vertical seam, a seam which can be used to reduce the width of an image, can be written as:
+In mathematical notation, a vertical seam, a seam which upon removal will reduce the width of an image, can be written as:
 
 $$s^x = \{s_i^x\}_{i=1}^m = \{(x(i), i)\}^m_{i=1}, s.t. \forall i, |x(i)-x(i-1)| \leq 1$$
 
-Here a vertical seam is represented as a set of $m$ pixels, $\{s_i^x\}_{i=1}^m$, where $m$ is the number of rows in the image. Note that since our image has $m$ rows and our vertical seam is connected from the top to the bottom of the image, then we need $m$ pixels in our vertical seam in total, exactly one pixel for each row of the image. 
+Here a vertical seam is represented as a set of $m$ pixels, $\{s_i^X\}_{i=1}^m$, where $m$ is the number of rows in the image. Note that since our image has $m$ rows and our vertical seam is connected from the top to the bottom of the image, then we need $m$ pixels in our vertical seam in total, exactly one pixel for each row of the image. 
 
-Further, each pixel $s_i^x$ in the seam can be written as its coordinate $(x(i), i)$. $x(i)$ represents the pixel's column, or x-coordinate, while $i$ represents the pixel's row, or y-coordinate. As we can see, the y-coordinate goes from $1$ to $m$ indicating that we have exactly one pixel for each row of the image. 
+Further, each pixel $s_i^X$ in the seam can be written as its coordinate $(x(i), i)$. $x(i)$ represents the pixel's column, or x-coordinate, while $i$ represents the pixel's row, or y-coordinate. As we can see, the y-coordinate goes from $1$ to $m$ indicating that we have exactly one pixel for each row of the image. 
 
 Note that we also have an additional constraint on the x-coordinates of the pixels in our seam, that is given by: $\forall i, \|x(i)-x(i-1)\| \leq 1$. This can be interpreted as for every $i$, or row, the x-coordinate of the pixel in the previous row $i - 1$ and the x-coordinate of the pixel in the current row $i$ must come from neighboring columns, such that the absolute difference in x-coordinate, or column, between these two pixels must be less than or equal to 1. This further ensures that our seam remains connected. 
 
@@ -239,34 +238,32 @@ $$E(I) = |\frac{\partial}{\partial x} I| + |\frac{\partial}{\partial y} I|$$
 <a name='Implementation'></a>
 ### Implementation Using Dynamic Programming
 
-When our goal is to reduce the width of an image from $n$ to $n'$, we should be removing the vertical seam from our image which minimizes the energy function, that is the seam with the lowest cumulative energy across all pixels in the seam. We can find the seam which minimizes our energy function through using dynamic programming. 
+When our goal is to reduce the width of an image from $n$ to $n'$, we should be removing the vertical seams from our image which minimize the energy function, that is we should remove seams with the lowest cumulative energy across all pixels in the seam. We can find the seam which minimizes our energy function through use of dynamic programming. 
 
-To define this issue in terms of dynamic programming, our goal is to find the vertical seam of minimum cost, where the cost is defined by our energy function. For dynamic programming, we need to set up a recurrence. To generalize our recurrence, we need to establish a way to calculate $M(i,j)$, the minimal cost of a seam that passes through some arbitrary pixel $(i,j)$. For clarity, here $M(i,j)$ will be the lowest possible cost of a seam leading up to pixel $(i,j)$, consisting of the costs, or energy, of $(i,j)$ and pixels above which belong to this seam. 
+To define this issue in terms of dynamic programming, our goal is to find the vertical seam of minimum cost, where the cost is defined by our energy function. For dynamic programming, we need to set up a recurrence. To generalize our recurrence, we need to establish a way to calculate $M(i,j)$, the minimal cost of a seam that passes through some arbitrary pixel $(i,j)$. To clarify, $M(i,j)$ will be the lowest possible cost of a seam leading up to pixel $(i,j)$, consisting of the costs, or energy, of pixel $(i,j)$ and the above pixels belonging to this seam. 
 
-Let us first assume that we have calculated, or have a way of calculating, the energy of each individual pixel in our image, including the energy $E(i,j)$ of the arbitrary pixel $(i, j)$. A matrix representation of the energy of each individual pixel in our image is shown below.
+Let us first assume that we have already calculated, or have a way of calculating, the energy of each individual pixel in our image, including the energy $E(i,j)$ of the arbitrary pixel $(i, j)$. A matrix representation of the energy of each individual pixel in our image is shown below.
 
 ![](https://i.imgur.com/qfMwABj.png)
 *Energy Matrix containing energy of each individual pixel in our image*
 
-Now we have $E(i,j)$, the energy of the pixel $(i,j)$, we need to find $M(i,j)$, the minimal cost of the seam that passes through $(i,j)$.
-
-Let us also assume that we have already calculated the minimal cost of the seam that passes through every pixel up until pixel $(i,j)$, that is we have already calculated the minimal cost of the seam that passes through pixels above $(i,j)$, such as for pixels $(0,0)$, .. $(i-1,j-1)$, $(i-1,j)$, $(i-1,j+1)$, ... $(i,j-1)$.
+Let us then assume that we have already calculated the minimal cost $M$ of the seam that passes through every pixel above, or up to, pixel $(i,j)$, such as pixels $(0,0)$, .. $(i-1,j-1)$, $(i-1,j)$, $(i-1,j+1)$, ... $(i,j-1)$.
 
 ![](https://i.imgur.com/b4T3egj.png)
 *Dynamic Programming Matrix containing energy of each individual pixel up to $(i,j)$*
 
-Let us now set up a recurrence to find $M(i,j)$, again the minimal cost of the seam that passes through the pixel $(i,j)$. To find $M(i,j)$, note that $M(i,j)$ can be found by adding the cost of the energy of pixel $(i,j)$ and the cost of the best (lowest cost) seam so far leading up to $(i,j)$.
+With these assumptions, let us now set up a recurrence to find $M(i,j)$, again the minimal cost of the seam that passes through the pixel $(i,j)$. To find $M(i,j)$, note that $M(i,j)$ can be found by adding the cost of the energy of pixel $(i,j)$, or $E(i,j)$, and the cost of the best (lowest cost) seam so far leading up to $(i,j)$.
 
-*Sidenote: To understand why $M(i,j)$ is the sum of $E(i,j)$ and the cost of the best seam so far leading up to $(i,j)$, note the following. Since $(i,j)$ is in the seam, it must contribute to $M(i,j)$. Since we must have arrived at $(i,j)$ from a seam leading up to it, the cost of a seam above it leading up to (i,j) must contribute to $M(i,j)$.*
+*Sidenote: To understand why $M(i,j)$ is the sum of $E(i,j)$ and the cost of the best seam so far leading up to $(i,j)$, note the following. Since $(i,j)$ is in the seam, it must contribute to $M(i,j)$. Since we must have arrived at $(i,j)$ from a seam leading up to it, the cost of the seam above it leading up to (i,j) must contribute to $M(i,j)$.*
 
 Let us now find these different components in order to add them together to get $M(i,j)$. Luckily, we already have the value of $E(i,j)$ as pictured in the purple energy matrix above. 
 
-Let us now find the cost of the best (lowest cost) seam so far leading up to $(i,j)$. To do so note, that to reach pixel $(i,j)$, the seam must have arrived at $(i,j)$ by traversing through one of three possible pixels from the row directly above it, $(i-1,j-1)$, $(i-1,j)$, or $(i-1, j+1)$. This is pictured in the matrix below. 
+To find the cost of the seam leading up to (i,j) with minimal cost, note that to reach pixel $(i,j)$, the seam must have arrived at $(i,j)$ by traversing through one of three possible pixels from the row directly above it, $(i-1,j-1)$, $(i-1,j)$, or $(i-1, j+1)$. This is pictured in the matrix below. 
 
 ![](https://i.imgur.com/9nNLQ0u.png)
 *To reach (i,j), the seam could have only come from one of three possible pixels.*
 
-Since we are trying to minimize $M(i,j)$, then we should then take the cost of the seam (of the three possible) with the lowest cost leading up to pixel $(i,j)$. The (minimal) costs of the seams containing pixels $(i-1,j-1)$, $(i-1,j)$, and $(i-1, j+1)$ are $M(i - 1, j -1)$, $M(i - 1, j)$, and $M(i - 1, j + 1)$, respectively. Therefore, we should take the minimum cost out of $M(i - 1, j -1)$, $M(i - 1, j)$, and $M(i - 1, j + 1)$ and add this to $E(i,j)$ to find $M(i,j)$. 
+Since we are trying to minimize $M(i,j)$, then we should then take the cost of the seam (of the three possible) with the lowest cost leading up to pixel $(i,j)$. Therefore, we should take the minimum cost out of $M(i - 1, j -1)$, $M(i - 1, j)$, and $M(i - 1, j + 1)$ and add this to $E(i,j)$ to find $M(i,j)$. 
 
 In mathematical notation, this **recursion relation** can be written as:
 
@@ -277,8 +274,48 @@ We now have the invariant property, $M(i,j)$, the minimal cost of a seam that go
 With the invariant property and the recurrence relation now in hand, dynamic programming can now be used to solve this problem with a runtime of $O(n \cdot m)$, where $n$ is the number of columns in our image, and $m$ is the number of rows in our image.
 
 
-Let's look at one example!**[INSERT LECTURE 11.2, SLIDES 12 AND BEYOND]**
+Let's look at one example! Below we have our dynamic programming matrix $M$ (left) and our Energy Matrix $E$ (right). Let the current $i$ and $j$ we are looking at be $(1, 1)$. Following the recurrence relation defined above, we find $E(1, 1)$, which is $2$, and substitute that into $M(1, 1)$. We also find $M(i - 1, j -1)$, $M(i - 1, j)$, and $M(i - 1, j + 1)$, which are the values $5$, $8$, and $12$, respectively. 
 
+![](https://i.imgur.com/KP7qqEr.png)
+
+The minimum of those three values is $5$, so we get $M(1, 1) = 2 + 5 = 7$.
+
+![](https://i.imgur.com/M4xhS0f.png)
+
+Moving onto $M(1, 2)$, we again find the value at the current $i$ and $j$ in $E$, getting $3$, and add the minimum of $8, 12, 3$ to get $M(1, 2) = 3 + 3 = 6$.
+
+![](https://i.imgur.com/y0vq5Lw.png)
+
+We can continue to populate $M$ in this fashion until we reach the last index.
+
+![](https://i.imgur.com/K6Cuk9O.png)
+
+We can then backtrack to find the seam path, advancing one row at a time and looking at the minimum value on the row above the current row minimum until we reach the top of the image. This can be accomplished by storing choices along the path, but not necessarily so.
+
+![](https://i.imgur.com/QpIXVm1.png)
+![](https://i.imgur.com/1JnpsEi.png)
+![](https://i.imgur.com/DsBHJzX.png)
+![](https://i.imgur.com/UhADQTG.png)
+
+This backtracking process allows us to find the best seam to remove. Let's take a look at an example of an input image! Below, we compute both the horizontal (left) and vertical cost (right) of the image. Both of these approaches can be used to select the best seam to remove.
+
+![](https://i.imgur.com/yPbwdeO.png)
+
+In summary, we can construct the following algorithm. Given the input image $im$ and the number of columns we want our output image to have, $n'$, we assume that $im$ is of size $m$ rows and $n$ columns. 
+
+In step 1, we have a loop that repeats $n-n'$ times. This is because we have $n$ columns in the input, and we want to remove vertical seams until we get the output of $n'$ columns.
+
+In the loop, we have to compute the Energy Matrix $E$ of the image, find the optimal seam $s$ in $E$, and then remove $s$ from $im$. At the conclusion of the loop, we return our image $im$. We can pseudocode the algorithm as follows:
+
+![](https://i.imgur.com/SGVd6sJ.png)
+
+Since the running time of each step in the loop ($1.1$, $1.2$, $1.3$) is $O(mn)$, the overall running time would be $O(dmn)$, where $d = (n - n')$.
+
+Lastly, below are some examples of seam carving, scaling, cropping, and retargeting in action. As you look through the images, take some time to compare the differences between resizing by seam-carving and resizing by other methods. We can see that in many cases seam-carving produces a much better output than scaling and cropping. We lose less information and introduce less artifacts.
+
+![](https://i.imgur.com/hAl7jrI.jpg)
+![](https://i.imgur.com/EofaFzH.jpg)
+![](https://i.imgur.com/a2VMa2l.jpg)
 
 <a name ='topic3'></a>
 ## Seam carving - Extensions
