@@ -391,15 +391,21 @@ So far, all of our images have primarily operated in the case where we know the 
 
 First, we must compute all the seams in an image. Next, we can store these precomputed vertical and horizontal seams alongside the image content in order to later map to any changes that we need to be made. This way we can convenientl add and remove seams when the image needs to be resized.
 
-![](https://i.imgur.com/XMkkkFi.jpg)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/XMkkkFi.jpg">
+</div>
 
 <a name='subtopic-3-5'></a>
 ### Object removal
 The use of seams can also be applied for purposes of object removal. In the below example, we may want to remove the green object from the image while leaving the red object intact.
-![](https://i.imgur.com/lF4B4Z5.jpg)
+
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/lF4B4Z5.jpg">
+</div>
 
 In order to accomplish this, what we can consider doing is by manipulating the energy component of the previous seams equation. As described before, our seam equation is: 
-![](https://i.imgur.com/up5dzLq.png)
+
+$$M(i,j) = E(i,j) + \min\left\{M(i-1,j-1), M(i-1,j), M(i-1,j+1)\right\}$$
 
 We can accomplish the goal of object removal by assigning a very low energy value to the piels in green while assigning a very high energy value $E$ to the pixels in red. The SEAM carving will always create paths going through the green pixels, as a result, while avoiding paths with the red pixels, thus accomplishing the task of object removal. 
 
@@ -408,19 +414,26 @@ We can accomplish the goal of object removal by assigning a very low energy valu
 
 One potential problem of this approach is that sometimes we cannot retain the image shape. See the image below for an example: 
 
-![](https://i.imgur.com/EFb1vU7.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/EFb1vU7.png">
+</div>
 
-One way we can look to resolve this limitation is using a similar approach as before where we manually adjust the energy value at certain pixels. By making this energy value large, we can communicate to the algorithm the importance of retaining this image's shape. 
+One way we can look to resolve this limitation is using a similar approach as before where we manually adjust the energy value at certain pixels. By making this energy value large, we can communicate to the algorithm the importance of retaining this image's shape.
+
 <a name='subtopic-3-6'></a>
 ### Improvement: Forward energy
 
 Next, we will discuss possible improvements to the existing algorithm. Currently, our method of approach focuses on staying away from pixels with high energy value while exploring pixels with low energy values. An example of this can be seen in the image below. 
 
-![](https://i.imgur.com/lmiMLrt.jpg)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/lmiMLrt.jpg">
+</div>
 
 Here, as an example, the "10%" image highlights the top 10% of pixels with highest energy values. As low energy pixels are removed from the image, we can also observe the average energy increasing in the image from the remaining pixels. However, one observation is that as we remove a seam from an image, we are also creating new edges which can thereby also increase the average pixel value. See the image below as an example. 
 
-![](https://i.imgur.com/DzsinY4.jpg)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/DzsinY4.jpg">
+</div>
 
 As a result, one thing we could consider is, rather than removing the lowest-energy pixels, we could focus on removing pixels that cause the smallest energy to be added to the image overall. This is because we want to avoid the unappealing above image on the right. 
 
@@ -429,24 +442,39 @@ As a result, one thing we could consider is, rather than removing the lowest-ene
 ### Approach
 We can start off this procedure by looking at each of the ways in which we can remove the seams. The image below illustrates that we can remove the left seam, the middle seam, and the right seam as valid options. 
 
-![](https://i.imgur.com/UCJJa1G.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/UCJJa1G.png">
+</div>
 
-Let us first consider the case of removing the left seam. ![](https://i.imgur.com/fkgeEZl.png)
+Let us first consider the case of removing the left seam.
+
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/fkgeEZl.png">
+</div>
 
 Once we remove the seam in red, we can calculate the new amount of energy introduced in the image as a result of removing the red pixels. We can perform a similar process for the right seam: 
 
-![](https://i.imgur.com/iVavhcG.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/iVavhcG.png">
+</div>
 
 For the middle seam, the calculation looks as follows:
 
-![](https://i.imgur.com/rSscXsY.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/rSscXsY.png">
+</div>
 
 Here, it can be noted that we only take one gradient (the two botom pixels) since we don't want to double-count. Ultimately, this can lead to the following new algorithm:
 
-![](https://i.imgur.com/5dkQXQW.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/5dkQXQW.png">
+</div>
 
 Ultimately, we can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
-![](https://i.imgur.com/51NGf0c.png)
+
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/51NGf0c.png">
+</div>
 
 <a name='subtopic-3-7'></a>
 ### Video seam carving
@@ -464,31 +492,34 @@ This is a substantially more difficult problem than image processing, for two re
 
 Let’s first consider a naive approach to seam-carving video, which seam-carves frame by frame independently. This means that the algorithm applies seam-carving to a frame independent from the following frames.
 
-![](https://i.imgur.com/YiAjzsv.png)
-
-Watch 0:00-0:36 of [this video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out the results of this process. 
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/YiAjzsv.png">
+  <div class="figcaption">Watch 0:00-0:36 of [this video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out the results of this process. </div>
+</div>
 
 #### Improved Approach
 
 Notice that the result using the naive approach is very jittery. Let's improve this by moving from 2D to 3D. To do so, consider images as 2D matrices and videos as 3D volumes of image frames. Rather than computing 1D paths in images, we will compute 2D manifolds to traverse video cubes.
 
-![](https://i.imgur.com/dSOdbCU.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/dSOdbCU.png">
+</div>
 
 Watch 1:11-2:13 of [the video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out an example of video retargeting and a high-level walkthrough of the 3D approach. Specifically, we replace the 2D dynamic programming algorithm with a 3D graph cut approach. We define a grid-like graph, where the nodes are pixels, and we add a source and target virtual nodes on both sides of the cube.
 
-![](https://i.imgur.com/Tm0fzbP.png)
-
-A cut in the graph defines a surface seam, and the intersection of this 2D surface with each frame defines the seam path on that frame.
-
-![](https://i.imgur.com/S2HHEoH.png)
-
-As such, we can guarantee that the seams are monotonic and connected.
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/Tm0fzbP.png">
+  <img src="https://i.imgur.com/S2HHEoH.png">
+  <div class="figcaption">A cut in the graph defines a surface seam, and the intersection of this 2D surface with each frame defines the seam path on that frame. As such, we can guarantee that the seams are monotonic and connected.</div>
+</div>
 
 #### Object Detection and Seam Carving
 
 Seam carving can also be combined with object detection. In the example below, we have a face detector which specifies the areas that we do not want to be removed by the seam-carving resizing algorithm. Our goal is to make the energy in those pixels very high such that the seam-carving will never prefer to go through those pixels.
 
-![](https://i.imgur.com/PyAlrEH.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://i.imgur.com/PyAlrEH.png">
+</div>
 
 
 To learn more about object detection with seam carving, feel free to take a look at these relevant resources.
