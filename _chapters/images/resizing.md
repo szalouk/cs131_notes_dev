@@ -1,6 +1,6 @@
 ---
 title: Resizing
-keywords: (seam-carving)
+keywords: (Seam carving, resizing, retargeting, expansion, object removal)
 order: 11 # Lecture number for 2020
 ---
 
