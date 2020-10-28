@@ -443,7 +443,7 @@ As a result, one thing we could consider is, rather than removing the lowest-ene
 We can start off this procedure by looking at each of the ways in which we can remove the seams. The image below illustrates that we can remove the left seam, the middle seam, and the right seam as valid options. 
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/UCJJa1G.png" width="500">
+  <img src="https://i.imgur.com/UCJJa1G.png" width="400">
 </div>
 
 Let us first consider the case of removing the left seam.
@@ -473,7 +473,7 @@ Here, it can be noted that we only take one gradient (the two botom pixels) sinc
 Ultimately, we can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
 
 <div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/51NGf0c.png" width="500">
+  <img src="https://i.imgur.com/51NGf0c.png" width="150">
 </div>
 
 <a name='subtopic-3-7'></a>
