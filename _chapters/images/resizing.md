@@ -492,8 +492,9 @@ Let’s first consider a naive approach to Seam carving video, which seam-carves
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/YiAjzsv.png">
-  <div class="figcaption">Watch 0:00-0:36 of [this video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out the results of this process. </div>
 </div>
+
+Watch 0:00-0:36 of [this video](https://www.youtube.com/watch?v=AJtE8afwJEg) to check out the results of this process.
 
 #### Improved Approach
 
