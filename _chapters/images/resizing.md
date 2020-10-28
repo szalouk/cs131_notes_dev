@@ -71,10 +71,10 @@ For more clarity, we will be using an example image to guide us and help us unde
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/cCSCQ4Y.png">
-  <div class="figcaption">Example Image with gradient-based energy image (Courtesy of CS131 Lecture 11 Slides)</div>
+  <div class="figcaption">Example Image with gradient-based energy image</div>
 </div>
 
-Take for instance a situation in which we have to **summarize**, or reduce, an image of size m x n to a new smaller size m x n' where n' < n. In this case, our Seam carving algorithm will need to remove m x (n - n') pixels from the image. But which pixels should we remove?
+Take for instance a situation in which we have to **summarize**, or reduce, an image of size $m \times n$ to a new smaller size $m \times n'$ where $n' < n$. In this case, our Seam carving algorithm will need to remove $m \times (n - n')$ pixels from the image. But which pixels should we remove?
 
 **Key Idea 1: We want to remove the pixels with the least *energy*.**
 
@@ -88,27 +88,27 @@ Although other energy functions are also possible, this is a simple gradient-bas
 
 **Key Idea 2: We want to remove pixels by seams.**
 
-Now that we have a guideline on what type of pixels to remove from the image, pixels with lower energy, the question stands, which $m x (n - n')$ pixels from the original image should we remove? We will introduce several possible ways of choosing pixels to remove from the image, and highlight the flaw with each of these methods, before proceeding into a discussion of the Seam carving algorithm.
+Now that we have a guideline on what type of pixels to remove from the image, pixels with lower energy, the question stands, which $m \times (n - n')$ pixels from the original image should we remove? We will introduce several possible ways of choosing pixels to remove from the image, and highlight the flaw with each of these methods, before proceeding into a discussion of the Seam carving algorithm.
 
 **Optimal Removal**
 
-One possible intuitive approach might be to remove the $m x (n - n')$ pixels in the image with the lowest energy globally across the whole image. In this case, we will simply rank all pixels in the image in order from least to most energy based on our gradient-based energy function, and remove the 
-$m x (n - n')$ pixels with the lowest energy in the image regardless of the positions of these pixels. 
+One possible intuitive approach might be to remove the $m \times (n - n')$ pixels in the image with the lowest energy globally across the whole image. In this case, we will simply rank all pixels in the image in order from least to most energy based on our gradient-based energy function, and remove the 
+$m \times (n - n')$ pixels with the lowest energy in the image regardless of the positions of these pixels. 
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/1tNxKNY.png">
-  <div class="figcaption">Result of removing lowest energy pixels from image (Courtesy of CS131 Lecture 11 Slides)</div>
+  <div class="figcaption">Result of removing lowest energy pixels from image</div>
 </div>
 
 However, since we removed pixels without paying attention to the location their, we end up losing a lot of the geometric structure in the image. We could have removed a lot more pixels from one row or column of the image than from another row or column. As a result, our image loses a lot of its geometric constraints and becomes extremely imbalanced.
 
 **Least-Energy Pixels Per Row Removal**
 
-We know now that we need to also consider the positions of the pixels in the image that we are removing. One large issue with optimal removal was that the summarized image might have different amount of pixels in each row and column. To fix this, what if we tried removing the same amount of pixels from each row of the image? Since we have $m$ rows, then we could try removing the $n - n'$ pixels with the lowest energy from each row of the image. In total, we would be removing $m x (n - n')$ pixels from the entire image, and arrive at a new summarized $m x n'$ image.
+We know now that we need to also consider the positions of the pixels in the image that we are removing. One large issue with optimal removal was that the summarized image might have different amount of pixels in each row and column. To fix this, what if we tried removing the same amount of pixels from each row of the image? Since we have $m$ rows, then we could try removing the $n - n'$ pixels with the lowest energy from each row of the image. In total, we would be removing $m \times (n - n')$ pixels from the entire image, and arrive at a new summarized $m \times n'$ image.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/vUXEEBA.png">
-  <div class="figcaption">Result of removing $n - n'$ pixels from each of $m$ rows of original image (Courtesy of CS131 Lecture 11 Slides)</div>
+  <div class="figcaption">Result of removing $n - n'$ pixels from each of $m$ rows of original image</div>
 </div>
 
 However, if we remove pixels from each row of the image independently, without paying attention to which pixels we removed in other rows, then we lose a lot of the vertical structure in the image. We see that columns in our new summarized image no longer make much sense. The pixels in our image begin to cave in on themselves. Pixels which shared the same column in our original image may now no longer share the same column in our new summarized image. Further, pixels from entirely different columns in our original image may now share the same column in our new summarized image. For example, in the new image, a pixel in row 1, column 5 of the original image may now be directly above a pixel in row 2, column 1 of the original image. As a result, we lose a lot of geometric structure in our image.
@@ -116,11 +116,11 @@ However, if we remove pixels from each row of the image independently, without p
 
 **Least-Energy Columns**
 
-What if we tried removing entire columns all at once then in order to avoid this issue? By removing entire columns, we can ensure that if we remove a pixel, then the entire column is removed, and we will no longer have this issue of pixels folding in on themselves. Pixels belonging to the same column of our original image will still share the same column in our new image. We see then that by using this method we will be able to retain a lot of the vertical structure, and will help us retain more geometric consistency and constraints in our new summarized image. To do so, we can calculate the total energy of all pixels in each column. Then, since we have $m$ rows, we can remove the $n - n'$ columns with the lowest total energy of all pixels in its column. In total, we remove $m x (n- n')$ pixels from our original image, arriving at a new $m x n'$ summarized image.
+What if we tried removing entire columns all at once then in order to avoid this issue? By removing entire columns, we can ensure that if we remove a pixel, then the entire column is removed, and we will no longer have this issue of pixels folding in on themselves. Pixels belonging to the same column of our original image will still share the same column in our new image. We see then that by using this method we will be able to retain a lot of the vertical structure, and will help us retain more geometric consistency and constraints in our new summarized image. To do so, we can calculate the total energy of all pixels in each column. Then, since we have $m$ rows, we can remove the $n - n'$ columns with the lowest total energy of all pixels in its column. In total, we remove $m \times (n- n')$ pixels from our original image, arriving at a new $m \times n'$ summarized image.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/yqWEZ0b.png">
-  <div class="figcaption">Result of removing $n - n'$ least-total-energy columns from original image (Courtesy of CS131 Lecture 11 Slides)</div>
+  <div class="figcaption">Result of removing $n - n'$ least-total-energy columns from original image</div>
 </div>
 
 This sounds like a great idea at first and we can see that this is a clear improvement from our previous methods of removing pixels. However, upon further inspection, we can see that this solution is not entirely perfect either. It introduces a lot of artifacts. For example, applying this method of removing least energy columns causes some geometries in the original image to lose its shape. For example, let's inspect the grey diagonal platform stretching across the bottom-side of our example image. The diagonal loses its shape using this method since entire columns making up the diagonal were removed without paying much attention to the diagonal's geometry. 
