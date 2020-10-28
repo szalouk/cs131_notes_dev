@@ -464,13 +464,11 @@ For the middle seam, the calculation looks as follows:
   <img src="https://i.imgur.com/rSscXsY.png" width="500">
 </div>
 
-Here, it can be noted that we only take one gradient (the two botom pixels) since we don't want to double-count. Ultimately, this can lead to the following new algorithm:
+Here, it can be noted that we only take one gradient (the two botom pixels) since we don't want to double-count. This can lead to the following new algorithm:
 
-<div class="fig figcenter fighighlight">
-  <img src="https://i.imgur.com/5dkQXQW.png">
-</div>
+$$ M(i,j) = \min \cases{M(i-1,j-1) + C_L(i,j) \\ M(i-1,j) + C_U(i,j) \\ M(i-1,j+1) + C_R(i,j)}$$
 
-Ultimately, we can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
+We can see the improvements this new, forward-looking approach has in comparison to our previously introduced backwards-looking approach.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/51NGf0c.png" width="300">
