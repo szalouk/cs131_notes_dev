@@ -1,6 +1,6 @@
 ---
 title: Resizing
-keywords: (insert comma-separated keywords here)
+keywords: (seam-carving)
 order: 11 # Lecture number for 2020
 ---
 
@@ -61,9 +61,9 @@ We have already seen how methods such as rescaling or cropping images without pa
 
 **Key Ideas Behind Seam Carving**
 
-Before diving into the algorithm, let us first discuss some key ideas behind the seam-carving algorithm. 
+Before diving into the algorithm, let us first discuss some key ideas behind the Seam carving algorithm. 
 
-For more clarity, we will be using an example image to guide us and help us understand the key ideas behind the seam-carving algorithm. 
+For more clarity, we will be using an example image to guide us and help us understand the key ideas behind the Seam carving algorithm. 
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/cCSCQ4Y.png">
@@ -267,7 +267,7 @@ seam_carving(img,n_new): // size(im) = mxn
 
 Since the running time of each step in the loop ($1.1$, $1.2$, $1.3$) is $O(mn)$, the overall running time would be $O(dmn)$, where $d = (n - n')$.
 
-Lastly, below are some examples of seam carving, scaling, cropping, and retargeting in action. As you look through the images, take some time to compare the differences between resizing by seam-carving and resizing by other methods. We can see that in many cases seam-carving produces a much better output than scaling and cropping. We lose less information and introduce less artifacts.
+Lastly, below are some examples of seam carving, scaling, cropping, and retargeting in action. As you look through the images, take some time to compare the differences between resizing by Seam carving and resizing by other methods. We can see that in many cases Seam carving produces a much better output than scaling and cropping. We lose less information and introduce less artifacts.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/hAl7jrI.jpg">
@@ -488,7 +488,7 @@ This is a substantially more difficult problem than image processing, for two re
 
 #### Naive Approach
 
-Let’s first consider a naive approach to seam-carving video, which seam-carves frame by frame independently. This means that the algorithm applies seam-carving to a frame independent from the following frames.
+Let’s first consider a naive approach to Seam carving video, which seam-carves frame by frame independently. This means that the algorithm applies Seam carving to a frame independent from the following frames.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/YiAjzsv.png">
@@ -513,7 +513,7 @@ Watch 1:11-2:13 of [the video](https://www.youtube.com/watch?v=AJtE8afwJEg) to c
 
 #### Object Detection and Seam Carving
 
-Seam carving can also be combined with object detection. In the example below, we have a face detector which specifies the areas that we do not want to be removed by the seam-carving resizing algorithm. Our goal is to make the energy in those pixels very high such that the seam-carving will never prefer to go through those pixels.
+Seam carving can also be combined with object detection. In the example below, we have a face detector which specifies the areas that we do not want to be removed by the Seam carving resizing algorithm. Our goal is to make the energy in those pixels very high such that the Seam carving will never prefer to go through those pixels.
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/PyAlrEH.png">
