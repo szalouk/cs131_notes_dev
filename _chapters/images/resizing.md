@@ -201,7 +201,7 @@ To find the cost of the seam leading up to (i,j) with minimal cost, note that to
 
 <div class="fig figcenter fighighlight">
   <img src="https://i.imgur.com/9nNLQ0u.png">
-  <div class="figcaption">To reach (i,j), the seam could have only come from one of three possible pixels.</div>
+  <div class="figcaption">To reach $(i,j)$, the seam could have only come from one of three possible pixels.</div>
 </div>
 
 Since we are trying to minimize $M(i,j)$, then we should then take the cost of the seam (of the three possible) with the lowest cost leading up to pixel $(i,j)$. Therefore, we should take the minimum cost out of $M(i - 1, j -1)$, $M(i - 1, j)$, and $M(i - 1, j + 1)$ and add this to $E(i,j)$ to find $M(i,j)$. 
