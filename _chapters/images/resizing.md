@@ -307,6 +307,15 @@ In step 1, we have a loop that repeats $n-n'$ times. This is because we have $n$
 
 In the loop, we have to compute the Energy Matrix $E$ of the image, find the optimal seam $s$ in $E$, and then remove $s$ from $im$. At the conclusion of the loop, we return our image $im$. We can pseudocode the algorithm as follows:
 
+```python
+seam_carving(img,n'): // size(im) = mxn
+    Do (n-n') times:
+        E := compute energy map on im
+	s := find optimal seam in E
+	im := remove s fromim
+    return im
+```
+
 ![](https://i.imgur.com/SGVd6sJ.png)
 
 Since the running time of each step in the loop ($1.1$, $1.2$, $1.3$) is $O(mn)$, the overall running time would be $O(dmn)$, where $d = (n - n')$.
